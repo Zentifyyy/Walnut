@@ -905,6 +905,7 @@ namespace Walnut {
 			ImGui_ImplGlfw_NewFrame();
 			ImGui::NewFrame();
 
+			if (m_Specification.UseDockspace)
 			{
 				// We are using the ImGuiWindowFlags_NoDocking flag to make the parent window not dockable into,
 				// because it would be confusing to have two docking targets within each others.
@@ -966,6 +967,12 @@ namespace Walnut {
 
 				ImGui::End();
 			}
+			else
+			{
+				// No dockspace - just render windows
+				for (auto& layer : m_LayerStack)
+					layer->OnUIRender();
+			}
 
 			// Rendering
 			ImGui::Render();
@@ -997,6 +1004,14 @@ namespace Walnut {
 			m_LastFrameTime = time;
 		}
 
+	}
+
+	void Application::SetMenubarCallback(const std::function<void()>& menubarCallback)
+	{
+		if (!m_Specification.UseDockspace)
+			WL_CORE_WARN_TAG("Application", "Application::SetMenubarCallback - ApplicationSpecification::UseDockspace is false to menubar will not be visible.");
+
+		m_MenubarCallback = menubarCallback;
 	}
 
 	void Application::Close()

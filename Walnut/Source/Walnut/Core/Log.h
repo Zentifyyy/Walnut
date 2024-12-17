@@ -51,7 +51,9 @@ namespace Walnut {
 		static std::map<std::string, TagDetails>& EnabledTags() { return s_EnabledTags; }
 
 		template<typename... Args>
-		static void PrintMessage(Log::Type type, Log::Level level, std::string_view tag, Args&&... args);
+		static void PrintMessageTag(Log::Type type, Log::Level level, std::string_view tag, std::format_string<Args...> format, Args&&... args);
+
+		static void PrintMessageTag(Log::Type type, Log::Level level, std::string_view tag, std::string_view message);
 
 		template<typename... Args>
 		static void PrintAssertMessage(Log::Type type, std::string_view prefix, Args&&... args);
@@ -95,62 +97,90 @@ namespace Walnut {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Core logging
-#define WL_CORE_TRACE_TAG(tag, ...) ::Walnut::Log::PrintMessage(::Walnut::Log::Type::Core, ::Walnut::Log::Level::Trace, tag, __VA_ARGS__)
-#define WL_CORE_INFO_TAG(tag, ...)  ::Walnut::Log::PrintMessage(::Walnut::Log::Type::Core, ::Walnut::Log::Level::Info, tag, __VA_ARGS__)
-#define WL_CORE_WARN_TAG(tag, ...)  ::Walnut::Log::PrintMessage(::Walnut::Log::Type::Core, ::Walnut::Log::Level::Warn, tag, __VA_ARGS__)
-#define WL_CORE_ERROR_TAG(tag, ...) ::Walnut::Log::PrintMessage(::Walnut::Log::Type::Core, ::Walnut::Log::Level::Error, tag, __VA_ARGS__)
-#define WL_CORE_FATAL_TAG(tag, ...) ::Walnut::Log::PrintMessage(::Walnut::Log::Type::Core, ::Walnut::Log::Level::Fatal, tag, __VA_ARGS__)
+#define WL_CORE_TRACE_TAG(tag, ...) ::Walnut::Log::PrintMessageTag(::Walnut::Log::Type::Core, ::Walnut::Log::Level::Trace, tag, __VA_ARGS__)
+#define WL_CORE_INFO_TAG(tag, ...)  ::Walnut::Log::PrintMessageTag(::Walnut::Log::Type::Core, ::Walnut::Log::Level::Info, tag, __VA_ARGS__)
+#define WL_CORE_WARN_TAG(tag, ...)  ::Walnut::Log::PrintMessageTag(::Walnut::Log::Type::Core, ::Walnut::Log::Level::Warn, tag, __VA_ARGS__)
+#define WL_CORE_ERROR_TAG(tag, ...) ::Walnut::Log::PrintMessageTag(::Walnut::Log::Type::Core, ::Walnut::Log::Level::Error, tag, __VA_ARGS__)
+#define WL_CORE_FATAL_TAG(tag, ...) ::Walnut::Log::PrintMessageTag(::Walnut::Log::Type::Core, ::Walnut::Log::Level::Fatal, tag, __VA_ARGS__)
 
 // Client logging
-#define WL_TRACE_TAG(tag, ...) ::Walnut::Log::PrintMessage(::Walnut::Log::Type::Client, ::Walnut::Log::Level::Trace, tag, __VA_ARGS__)
-#define WL_INFO_TAG(tag, ...)  ::Walnut::Log::PrintMessage(::Walnut::Log::Type::Client, ::Walnut::Log::Level::Info, tag, __VA_ARGS__)
-#define WL_WARN_TAG(tag, ...)  ::Walnut::Log::PrintMessage(::Walnut::Log::Type::Client, ::Walnut::Log::Level::Warn, tag, __VA_ARGS__)
-#define WL_ERROR_TAG(tag, ...) ::Walnut::Log::PrintMessage(::Walnut::Log::Type::Client, ::Walnut::Log::Level::Error, tag, __VA_ARGS__)
-#define WL_FATAL_TAG(tag, ...) ::Walnut::Log::PrintMessage(::Walnut::Log::Type::Client, ::Walnut::Log::Level::Fatal, tag, __VA_ARGS__)
+#define WL_TRACE_TAG(tag, ...) ::Walnut::Log::PrintMessageTag(::Walnut::Log::Type::Client, ::Walnut::Log::Level::Trace, tag, __VA_ARGS__)
+#define WL_INFO_TAG(tag, ...)  ::Walnut::Log::PrintMessageTag(::Walnut::Log::Type::Client, ::Walnut::Log::Level::Info, tag, __VA_ARGS__)
+#define WL_WARN_TAG(tag, ...)  ::Walnut::Log::PrintMessageTag(::Walnut::Log::Type::Client, ::Walnut::Log::Level::Warn, tag, __VA_ARGS__)
+#define WL_ERROR_TAG(tag, ...) ::Walnut::Log::PrintMessageTag(::Walnut::Log::Type::Client, ::Walnut::Log::Level::Error, tag, __VA_ARGS__)
+#define WL_FATAL_TAG(tag, ...) ::Walnut::Log::PrintMessageTag(::Walnut::Log::Type::Client, ::Walnut::Log::Level::Fatal, tag, __VA_ARGS__)
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Core Logging
-#define WL_CORE_TRACE(...)  ::Walnut::Log::PrintMessage(::Walnut::Log::Type::Core, ::Walnut::Log::Level::Trace, "", __VA_ARGS__)
-#define WL_CORE_INFO(...)   ::Walnut::Log::PrintMessage(::Walnut::Log::Type::Core, ::Walnut::Log::Level::Info, "", __VA_ARGS__)
-#define WL_CORE_WARN(...)   ::Walnut::Log::PrintMessage(::Walnut::Log::Type::Core, ::Walnut::Log::Level::Warn, "", __VA_ARGS__)
-#define WL_CORE_ERROR(...)  ::Walnut::Log::PrintMessage(::Walnut::Log::Type::Core, ::Walnut::Log::Level::Error, "", __VA_ARGS__)
-#define WL_CORE_FATAL(...)  ::Walnut::Log::PrintMessage(::Walnut::Log::Type::Core, ::Walnut::Log::Level::Fatal, "", __VA_ARGS__)
+#define WL_CORE_TRACE(...)  ::Walnut::Log::PrintMessageTag(::Walnut::Log::Type::Core, ::Walnut::Log::Level::Trace, "CORE", __VA_ARGS__)
+#define WL_CORE_INFO(...)   ::Walnut::Log::PrintMessageTag(::Walnut::Log::Type::Core, ::Walnut::Log::Level::Info, "CORE", __VA_ARGS__)
+#define WL_CORE_WARN(...)   ::Walnut::Log::PrintMessageTag(::Walnut::Log::Type::Core, ::Walnut::Log::Level::Warn, "CORE", __VA_ARGS__)
+#define WL_CORE_ERROR(...)  ::Walnut::Log::PrintMessageTag(::Walnut::Log::Type::Core, ::Walnut::Log::Level::Error, "CORE", __VA_ARGS__)
+#define WL_CORE_FATAL(...)  ::Walnut::Log::PrintMessageTag(::Walnut::Log::Type::Core, ::Walnut::Log::Level::Fatal, "CORE", __VA_ARGS__)
 
 // Client Logging
-#define WL_TRACE(...)   ::Walnut::Log::PrintMessage(::Walnut::Log::Type::Client, ::Walnut::Log::Level::Trace, "", __VA_ARGS__)
-#define WL_INFO(...)    ::Walnut::Log::PrintMessage(::Walnut::Log::Type::Client, ::Walnut::Log::Level::Info, "", __VA_ARGS__)
-#define WL_WARN(...)    ::Walnut::Log::PrintMessage(::Walnut::Log::Type::Client, ::Walnut::Log::Level::Warn, "", __VA_ARGS__)
-#define WL_ERROR(...)   ::Walnut::Log::PrintMessage(::Walnut::Log::Type::Client, ::Walnut::Log::Level::Error, "", __VA_ARGS__)
-#define WL_FATAL(...)   ::Walnut::Log::PrintMessage(::Walnut::Log::Type::Client, ::Walnut::Log::Level::Fatal, "", __VA_ARGS__)
+#define WL_TRACE(...)   ::Walnut::Log::PrintMessageTag(::Walnut::Log::Type::Client, ::Walnut::Log::Level::Trace, "CLIENT", __VA_ARGS__)
+#define WL_INFO(...)    ::Walnut::Log::PrintMessageTag(::Walnut::Log::Type::Client, ::Walnut::Log::Level::Info, "CLIENT", __VA_ARGS__)
+#define WL_WARN(...)    ::Walnut::Log::PrintMessageTag(::Walnut::Log::Type::Client, ::Walnut::Log::Level::Warn, "CLIENT", __VA_ARGS__)
+#define WL_ERROR(...)   ::Walnut::Log::PrintMessageTag(::Walnut::Log::Type::Client, ::Walnut::Log::Level::Error, "CLIENT", __VA_ARGS__)
+#define WL_FATAL(...)   ::Walnut::Log::PrintMessageTag(::Walnut::Log::Type::Client, ::Walnut::Log::Level::Fatal, "CLIENT", __VA_ARGS__)
 
 namespace Walnut {
 
+
 	template<typename... Args>
-	void Log::PrintMessage(Log::Type type, Log::Level level, std::string_view tag, Args&&... args)
+	void Log::PrintMessageTag(Log::Type type, Log::Level level, std::string_view tag, const std::format_string<Args...> format, Args&&... args)
 	{
 		auto detail = s_EnabledTags[std::string(tag)];
 		if (detail.Enabled && detail.LevelFilter <= level)
 		{
 			auto logger = (type == Type::Core) ? GetCoreLogger() : GetClientLogger();
-			std::string logString = tag.empty() ? "{0}{1}" : "[{0}] {1}";
+			std::string formatted = std::format(format, std::forward<Args>(args)...);
 			switch (level)
 			{
 			case Level::Trace:
-				//logger->trace(fmt::vformat(logString, fmt::make_format_args(tag, fmt::make_format_args(args...))));
-				logger->trace(fmt::format(logString, tag, fmt::vformat(fmt::make_format_args(args...))));
+				logger->trace("[{0}] {1}", tag, formatted);
 				break;
 			case Level::Info:
-				logger->info(fmt::format(logString, tag, fmt::vformat(fmt::make_format_args(args...))));
+				logger->info("[{0}] {1}", tag, formatted);
 				break;
 			case Level::Warn:
-				logger->warn(fmt::format(logString, tag, fmt::vformat(fmt::make_format_args(args...))));
+				logger->warn("[{0}] {1}", tag, formatted);
 				break;
 			case Level::Error:
-				logger->error(fmt::format(logString, tag, fmt::vformat(fmt::make_format_args(args...))));
+				logger->error("[{0}] {1}", tag, formatted);
 				break;
 			case Level::Fatal:
-				logger->critical(fmt::format(logString, tag, fmt::vformat(fmt::make_format_args(args...))));
+				logger->critical("[{0}] {1}", tag, formatted);
+				break;
+			}
+		}
+	}
+
+
+	inline void Log::PrintMessageTag(Log::Type type, Log::Level level, std::string_view tag, std::string_view message)
+	{
+		auto detail = s_EnabledTags[std::string(tag)];
+		if (detail.Enabled && detail.LevelFilter <= level)
+		{
+			auto logger = (type == Type::Core) ? GetCoreLogger() : GetClientLogger();
+			switch (level)
+			{
+			case Level::Trace:
+				logger->trace("[{0}] {1}", tag, message);
+				break;
+			case Level::Info:
+				logger->info("[{0}] {1}", tag, message);
+				break;
+			case Level::Warn:
+				logger->warn("[{0}] {1}", tag, message);
+				break;
+			case Level::Error:
+				logger->error("[{0}] {1}", tag, message);
+				break;
+			case Level::Fatal:
+				logger->critical("[{0}] {1}", tag, message);
 				break;
 			}
 		}

@@ -34,6 +34,10 @@ namespace Walnut {
 		// of Windows default
 		bool CustomTitlebar = false;
 
+		// Uses a dockspace which takes up the
+		// entire window
+		bool UseDockspace = true;
+
 		// Window will be created in the center
 		// of primary monitor
 		bool CenterWindow = false;
@@ -48,7 +52,7 @@ namespace Walnut {
 		static Application& Get();
 
 		void Run();
-		void SetMenubarCallback(const std::function<void()>& menubarCallback) { m_MenubarCallback = menubarCallback; }
+		void SetMenubarCallback(const std::function<void()>& menubarCallback);
 
 		template<typename T>
 		void PushLayer()

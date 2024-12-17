@@ -14,9 +14,6 @@ namespace Walnut {
 
 	void Log::Init()
 	{
-		// NOTE(Yan): disabled for now because logging macros need some work
-
-		return;
 		// Create "logs" directory if doesn't exist
 		std::string logsDirectory = "logs";
 		if (!std::filesystem::exists(logsDirectory))
@@ -46,7 +43,7 @@ namespace Walnut {
 		appSinks[1]->set_pattern("%^[%T] %n: %v%$");
 #endif
 
-		s_CoreLogger = std::make_shared<spdlog::logger>("HAZEL", hazelSinks.begin(), hazelSinks.end());
+		s_CoreLogger = std::make_shared<spdlog::logger>("WALNUT", hazelSinks.begin(), hazelSinks.end());
 		s_CoreLogger->set_level(spdlog::level::trace);
 
 		s_ClientLogger = std::make_shared<spdlog::logger>("APP", appSinks.begin(), appSinks.end());

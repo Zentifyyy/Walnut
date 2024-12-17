@@ -1,7 +1,7 @@
 project "WalnutApp"
    kind "ConsoleApp"
    language "C++"
-   cppdialect "C++17"
+   cppdialect "C++20"
    targetdir "bin/%{cfg.buildcfg}"
    staticruntime "off"
 
@@ -30,6 +30,7 @@ project "WalnutApp"
    filter "system:windows"
       systemversion "latest"
       defines { "WL_PLATFORM_WINDOWS" }
+      buildoptions { "/utf-8" }
 
    filter "configurations:Debug"
       defines { "WL_DEBUG" }
