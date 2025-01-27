@@ -11,6 +11,7 @@ namespace Walnut {
 		virtual void OnDetach() {}
 
 		virtual void OnUpdate(float ts) {}
+		virtual void OnRender() {}
 		virtual void OnUIRender() {}
 	};
 

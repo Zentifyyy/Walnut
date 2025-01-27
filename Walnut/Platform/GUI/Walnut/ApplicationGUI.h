@@ -12,6 +12,8 @@
 #include <filesystem>
 
 #include "imgui.h"
+#include "backends/imgui_impl_vulkan.h"
+
 #include "vulkan/vulkan.h"
 
 void check_vk_result(VkResult err);
@@ -63,6 +65,8 @@ namespace Walnut {
 
 		void PushLayer(const std::shared_ptr<Layer>& layer) { m_LayerStack.emplace_back(layer); layer->OnAttach(); }
 
+		const std::vector<std::shared_ptr<Layer>>& GetLayerStack() const { return m_LayerStack; }
+
 		void Close();
 
 		bool IsMaximized() const;
@@ -88,6 +92,9 @@ namespace Walnut {
 		{
 			m_EventQueue.push(func);
 		}
+
+		static ImGui_ImplVulkanH_Window* GetMainWindowData();
+		static VkCommandBuffer GetActiveCommandBuffer();
 	private:
 		void Init();
 		void Shutdown();

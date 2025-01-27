@@ -35,6 +35,7 @@ project "Walnut-Headless"
    filter "system:windows"
       systemversion "latest"
       defines { "WL_PLATFORM_WINDOWS" }
+      buildoptions { "/utf-8" }
 
    filter "system:linux"
       systemversion "latest"

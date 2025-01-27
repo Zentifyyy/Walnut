@@ -35,6 +35,7 @@ namespace Walnut::UI {
 			constexpr auto selection = IM_COL32(237, 192, 119, 255);
 			constexpr auto selectionMuted = IM_COL32(237, 201, 142, 23);
 			constexpr auto backgroundPopup = IM_COL32(50, 50, 50, 255);
+			constexpr auto error = IM_COL32(222, 43, 43, 255);
 			constexpr auto validPrefab = IM_COL32(82, 179, 222, 255);
 			constexpr auto invalidPrefab = IM_COL32(222, 43, 43, 255);
 			constexpr auto missingMesh = IM_COL32(230, 102, 76, 255);
