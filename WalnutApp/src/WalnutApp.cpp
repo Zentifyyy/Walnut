@@ -11,8 +11,6 @@ public:
 	{
 		ImGui::Begin("Hello");
 		ImGui::Button("Button");
-		auto image = Walnut::Application::Get().GetApplicationIcon();
-		ImGui::Image(image->GetDescriptorSet(), { (float)image->GetWidth(), (float)image->GetHeight()});
 		ImGui::End();
 
 		ImGui::ShowDemoWindow();

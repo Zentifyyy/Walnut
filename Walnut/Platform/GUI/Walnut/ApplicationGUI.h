@@ -16,8 +16,6 @@
 
 #include "vulkan/vulkan.h"
 
-#include "Walnut/Embed/Walnut-Icon.embed"
-
 void check_vk_result(VkResult err);
 
 struct GLFWwindow;
@@ -55,8 +53,6 @@ namespace Walnut {
 		float TitlebarPaddingY = 9.0f;
 
 		float TitlebarHeight = 64.0f;
-
-		const uint8_t* TitlebarIcon;
 	};
 
 	class Application
