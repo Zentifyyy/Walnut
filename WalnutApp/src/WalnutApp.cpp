@@ -11,6 +11,8 @@ public:
 	{
 		ImGui::Begin("Hello");
 		ImGui::Button("Button");
+		auto image = Walnut::Application::Get().GetApplicationIcon();
+		ImGui::Image(image->GetDescriptorSet(), { (float)image->GetWidth(), (float)image->GetHeight()});
 		ImGui::End();
 
 		ImGui::ShowDemoWindow();
@@ -61,8 +63,21 @@ Walnut::Application* Walnut::CreateApplication(int argc, char** argv)
 	Walnut::ApplicationSpecification spec;
 	spec.Name = "Walnut Example";
 	spec.CustomTitlebar = true;
+	
+	spec.TitlebarButtonColour = ImColor(255, 225, 135, 100);
+	spec.TitlebarButtonHoveredColour = ImColor(255, 225, 135, 60);
+	spec.TitlebarButtonPressedColour = ImColor(255, 225, 135, 30);
+
+	spec.TitlebarPaddingY = 9.0f;
+	spec.TitlebarHeight = 64.0f;
+
+	spec.IconPath = "img/AppIcon.png";
+
 
 	Walnut::Application* app = new Walnut::Application(spec);
+
+	app->SetApplicationIcon("img/AppIcon.png");
+
 	std::shared_ptr<ExampleLayer> exampleLayer = std::make_shared<ExampleLayer>();
 	app->PushLayer(exampleLayer);
 	app->SetMenubarCallback([app, exampleLayer]()

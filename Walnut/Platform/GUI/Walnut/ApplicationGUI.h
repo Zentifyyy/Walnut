@@ -16,6 +16,8 @@
 
 #include "vulkan/vulkan.h"
 
+#include "Walnut/Embed/Walnut-Icon.embed"
+
 void check_vk_result(VkResult err);
 
 struct GLFWwindow;
@@ -43,6 +45,18 @@ namespace Walnut {
 		// Window will be created in the center
 		// of primary monitor
 		bool CenterWindow = false;
+
+		ImU32 TitlebarButtonColour = ImColor(255, 225, 135, 100);
+
+		ImU32 TitlebarButtonHoveredColour = ImColor(255, 225, 135, 60);
+
+		ImU32 TitlebarButtonPressedColour = ImColor(255, 225, 135, 30);
+
+		float TitlebarPaddingY = 9.0f;
+
+		float TitlebarHeight = 64.0f;
+
+		const uint8_t* TitlebarIcon;
 	};
 
 	class Application
@@ -71,6 +85,10 @@ namespace Walnut {
 
 		bool IsMaximized() const;
 		std::shared_ptr<Image> GetApplicationIcon() const { return m_AppHeaderIcon; }
+
+		void SetApplicationIcon(std::string iconPath) {
+			m_AppHeaderIcon = std::make_shared<Walnut::Image>(iconPath);
+		}
 
 		float GetTime();
 		GLFWwindow* GetWindowHandle() const { return m_WindowHandle; }

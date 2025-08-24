@@ -405,8 +405,8 @@ static void glfw_error_callback(int error, const char* description)
 
 namespace Walnut {
 
-#include "Walnut/Embed/Walnut-Icon.embed"
-#include "Walnut/Embed/WindowImages.embed"
+	#include "Walnut/Embed/Walnut-Icon.embed"
+	#include "Walnut/Embed/WindowImages.embed"
 
 	Application::Application(const ApplicationSpecification& specification)
 		: m_Specification(specification)
@@ -683,7 +683,7 @@ namespace Walnut {
 
 	void Application::UI_DrawTitlebar(float& outTitlebarHeight)
 	{
-		const float titlebarHeight = 58.0f;
+		const float titlebarHeight = m_Specification.TitlebarHeight;
 		const bool isMaximized = IsMaximized();
 		float titlebarVerticalOffset = isMaximized ? -6.0f : 0.0f;
 		const ImVec2 windowPadding = ImGui::GetCurrentWindow()->WindowPadding;
@@ -702,7 +702,7 @@ namespace Walnut {
 		{
 			const int logoWidth = 48;// m_LogoTex->GetWidth();
 			const int logoHeight = 48;// m_LogoTex->GetHeight();
-			const ImVec2 logoOffset(16.0f + windowPadding.x, 5.0f + windowPadding.y + titlebarVerticalOffset);
+			const ImVec2 logoOffset(16.0f + windowPadding.x, 5.0f + windowPadding.y + titlebarVerticalOffset + (m_Specification.TitlebarPaddingY / 2) );
 			const ImVec2 logoRectStart = { ImGui::GetItemRectMin().x + logoOffset.x, ImGui::GetItemRectMin().y + logoOffset.y };
 			const ImVec2 logoRectMax = { logoRectStart.x + logoWidth, logoRectStart.y + logoHeight };
 			fgDrawList->AddImage(m_AppHeaderIcon->GetDescriptorSet(), logoRectStart, logoRectMax);
@@ -738,7 +738,7 @@ namespace Walnut {
 			{
 				ImGui::SetItemAllowOverlap();
 				const float logoHorizontalOffset = 16.0f * 2.0f + 48.0f + windowPadding.x;
-				ImGui::SetCursorPos(ImVec2(logoHorizontalOffset, 6.0f + titlebarVerticalOffset));
+				ImGui::SetCursorPos(ImVec2(logoHorizontalOffset, 6.0f + titlebarVerticalOffset + m_Specification.TitlebarPaddingY));
 				UI_DrawMenubar();
 
 				if (ImGui::IsItemHovered())
@@ -752,22 +752,22 @@ namespace Walnut {
 			// Centered Window title
 			ImVec2 currentCursorPos = ImGui::GetCursorPos();
 			ImVec2 textSize = ImGui::CalcTextSize(m_Specification.Name.c_str());
-			ImGui::SetCursorPos(ImVec2(ImGui::GetWindowWidth() * 0.5f - textSize.x * 0.5f, 2.0f + windowPadding.y + 6.0f));
+			ImGui::SetCursorPos(ImVec2(ImGui::GetWindowWidth() * 0.5f - textSize.x * 0.5f, 2.0f + windowPadding.y + 6.0f + m_Specification.TitlebarPaddingY));
 			ImGui::Text("%s", m_Specification.Name.c_str()); // Draw title
 			ImGui::SetCursorPos(currentCursorPos);
 		}
 
 		// Window buttons
-		const ImU32 buttonColN = UI::Colors::ColorWithMultipliedValue(UI::Colors::Theme::text, 0.9f);
-		const ImU32 buttonColH = UI::Colors::ColorWithMultipliedValue(UI::Colors::Theme::text, 1.2f);
-		const ImU32 buttonColP = UI::Colors::Theme::textDarker;
+		const ImU32 buttonColN = m_Specification.TitlebarButtonColour;
+		const ImU32 buttonColH = m_Specification.TitlebarButtonHoveredColour;
+		const ImU32 buttonColP = m_Specification.TitlebarButtonPressedColour;
 		const float buttonWidth = 14.0f;
 		const float buttonHeight = 14.0f;
 
 		// Minimize Button
 
 		ImGui::Spring();
-		UI::ShiftCursorY(8.0f);
+		UI::ShiftCursorY(8.0f + m_Specification.TitlebarPaddingY);
 		{
 			const int iconWidth = m_IconMinimize->GetWidth();
 			const int iconHeight = m_IconMinimize->GetHeight();
@@ -787,7 +787,7 @@ namespace Walnut {
 
 		// Maximize Button
 		ImGui::Spring(-1.0f, 17.0f);
-		UI::ShiftCursorY(8.0f);
+		UI::ShiftCursorY(8.0f + m_Specification.TitlebarPaddingY);
 		{
 			const int iconWidth = m_IconMaximize->GetWidth();
 			const int iconHeight = m_IconMaximize->GetHeight();
@@ -810,14 +810,14 @@ namespace Walnut {
 
 		// Close Button
 		ImGui::Spring(-1.0f, 15.0f);
-		UI::ShiftCursorY(8.0f);
+		UI::ShiftCursorY(8.0f + m_Specification.TitlebarPaddingY);
 		{
 			const int iconWidth = m_IconClose->GetWidth();
 			const int iconHeight = m_IconClose->GetHeight();
 			if (ImGui::InvisibleButton("Close", ImVec2(buttonWidth, buttonHeight)))
 				Application::Get().Close();
 
-			UI::DrawButtonImage(m_IconClose, UI::Colors::Theme::text, UI::Colors::ColorWithMultipliedValue(UI::Colors::Theme::text, 1.4f), buttonColP);
+			UI::DrawButtonImage(m_IconClose, buttonColN, buttonColH, buttonColP);
 		}
 
 		ImGui::Spring(-1.0f, 18.0f);
@@ -833,7 +833,7 @@ namespace Walnut {
 
 		if (m_Specification.CustomTitlebar)
 		{
-			const ImRect menuBarRect = { ImGui::GetCursorPos(), { ImGui::GetContentRegionAvail().x + ImGui::GetCursorScreenPos().x, ImGui::GetFrameHeightWithSpacing() } };
+			const ImRect menuBarRect = { ImGui::GetCursorPos(), { ImGui::GetContentRegionAvail().x + ImGui::GetCursorScreenPos().x, ImGui::GetFrameHeightWithSpacing() + m_Specification.TitlebarPaddingY } };
 
 			ImGui::BeginGroup();
 			if (UI::BeginMenubar(menuBarRect))
