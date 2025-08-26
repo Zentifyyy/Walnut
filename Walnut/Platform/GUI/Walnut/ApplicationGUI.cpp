@@ -431,7 +431,8 @@ namespace Walnut {
 	void Application::Init()
 	{
 		// Intialize logging
-		Log::Init();
+		if(m_Specification.UseLogging)
+			Log::Init();
 
 		// Setup GLFW window
 		glfwSetErrorCallback(glfw_error_callback);

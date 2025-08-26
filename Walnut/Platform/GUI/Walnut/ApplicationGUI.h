@@ -44,6 +44,9 @@ namespace Walnut {
 		// of primary monitor
 		bool CenterWindow = false;
 
+		//Enable / Disable Walnut logging
+		bool UseLogging = false;
+
 		ImU32 TitlebarButtonColour = ImColor(255, 225, 135, 100);
 
 		ImU32 TitlebarButtonHoveredColour = ImColor(255, 225, 135, 60);
