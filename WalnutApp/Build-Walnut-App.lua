@@ -24,8 +24,8 @@ project "WalnutApp"
         "Walnut"
     }
 
-   targetdir ("../bin/" .. outputdir .. "/%{prj.name}")
-   objdir ("../bin-int/" .. outputdir .. "/%{prj.name}")
+   targetdir ("../output/WalnutApp/bin/" .. outputdir .. "/%{prj.name}")
+   objdir ("../output/WalnutApp/bin-int/" .. outputdir .. "/%{prj.name}")
 
    filter "system:windows"
       systemversion "latest"
