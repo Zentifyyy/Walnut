@@ -76,6 +76,9 @@ Walnut::Application* Walnut::CreateApplication(int argc, char** argv)
 	// And you can disable logging to lower file clutter
 	spec.UseLogging = false;
 
+	// You can now change the size of the logo on the titlebar
+	spec.LogoSize = { 48.0f, 48.0f };
+
 	Walnut::Application* app = new Walnut::Application(spec);
 
 	//And you can set the applications icon to a .png

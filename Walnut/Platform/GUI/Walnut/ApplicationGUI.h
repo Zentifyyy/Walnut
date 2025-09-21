@@ -56,6 +56,8 @@ namespace Walnut {
 		float TitlebarPaddingY = 9.0f;
 
 		float TitlebarHeight = 64.0f;
+
+		ImVec2 LogoSize = { 48.0f,48.0f };
 	};
 
 	class Application
