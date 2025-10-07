@@ -44,20 +44,34 @@ namespace Walnut {
 		// of primary monitor
 		bool CenterWindow = false;
 
-		//Enable / Disable Walnut logging
+		// Enable / Disable Walnut logging
 		bool UseLogging = false;
 
+		// Changes the default colour of your applications minimise, maximise and close buttons.
 		ImU32 TitlebarButtonColour = ImColor(255, 225, 135, 100);
 
+		// Changes the colour of your applications minimise, maximise and close buttons while hovered.
 		ImU32 TitlebarButtonHoveredColour = ImColor(255, 225, 135, 60);
 
-		ImU32 TitlebarButtonPressedColour = ImColor(255, 225, 135, 30);
+		// Changes the colour of your applications minimise, maximise and close buttons while pressed.
+		ImU32 TitlebarButtonPressedColour = ImColor(255, 225, 135, 30); 
 
-		float TitlebarPaddingY = 9.0f;
+		// Sets the padding of the titlebar so you can move the elements inside if need be.
+		float TitlebarPaddingY = 9.0f; 
 
-		float TitlebarHeight = 64.0f;
+		// Sets the height of your Applications titlebar.
+		float TitlebarHeight = 64.0f; 
 
-		ImVec2 LogoSize = { 48.0f,48.0f };
+		// Sets the size of the logo, in the top left of your application.
+		ImVec2 LogoSize = { 48.0f,48.0f }; 
+
+		// Changes the minimum window size.
+		// Use GLFW_DONT_CARE or -1 for No Minimum Size.
+		ImVec2 MinWindowSize = { 300 , 300 }; 
+		
+		// Changes the maximum window size.
+		// Use GLFW_DONT_CARE or -1 for No Maximum Width.
+		ImVec2 MaxWindowSize = { -1 , -1 }; 
 	};
 
 	class Application

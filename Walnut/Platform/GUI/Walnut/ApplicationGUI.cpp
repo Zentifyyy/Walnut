@@ -474,6 +474,8 @@ namespace Walnut {
 		
 		glfwShowWindow(m_WindowHandle);
 
+		glfwSetWindowSizeLimits(m_WindowHandle, m_Specification.MinWindowSize.x, m_Specification.MinWindowSize.y, m_Specification.MaxWindowSize.x, m_Specification.MaxWindowSize.y);
+
 		// Setup Vulkan
 		if (!glfwVulkanSupported())
 		{

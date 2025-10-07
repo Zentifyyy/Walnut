@@ -63,7 +63,7 @@ Walnut::Application* Walnut::CreateApplication(int argc, char** argv)
 	spec.CustomTitlebar = true;
 
 	spec.IconPath = "img/AppIcon.png";
-	
+
 	// Now you can customise your titlebars colours from here
 	spec.TitlebarButtonColour = ImColor(255, 225, 135, 100);
 	spec.TitlebarButtonHoveredColour = ImColor(255, 225, 135, 60);
@@ -78,6 +78,10 @@ Walnut::Application* Walnut::CreateApplication(int argc, char** argv)
 
 	// You can now change the size of the logo on the titlebar
 	spec.LogoSize = { 48.0f, 48.0f };
+
+	// Min and max window size, use GLFW_DONT_CARE or -1 for no minimum or maximum
+	spec.MinWindowSize = { 300 , 300 };
+	spec.MaxWindowSize = { -1 , -1 };
 
 	Walnut::Application* app = new Walnut::Application(spec);
 
