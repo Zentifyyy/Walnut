@@ -1,11 +1,19 @@
 # Walnut
 
-Walnut is a simple application framework built with Dear ImGui and designed to be used with Vulkan - basically this means you can seemlessly blend real-time Vulkan rendering with a great UI library to build desktop applications. The plan is to expand Walnut to include common utilities to make immediate-mode desktop apps and simple Vulkan applications.
+Walnut is a simple application framework built with Dear ImGui and designed to be used with Vulkan.
+Basically this means you can seemlessly blend real-time Vulkan rendering with a great UI library to build desktop applications. 
 
-Currently supports Windows - with macOS and Linux support planned. Setup scripts support Visual Studio 2022 by default.
+Originally forked from [StudioCherno/Walnut](https://github.com/StudioCherno/Walnut), now includes features such as:
 
-![WalnutExample](https://hazelengine.com/images/ForestLauncherScreenshot.jpg)
-_<center>Forest Launcher - an application made with Walnut</center>_
+- Minimum and Maximum window size.
+- Logo size control.
+- Updated output dir to be output/...
+- The ability to disable Walnuts logging system.
+- Titlebar icon customisation.
+- Titlebar button colour customisation.
+- Titlebar size and y padding customisation.
+
+All from your own file, so you dont have to modify Walnut whenever you want to change the logo of your application.
 
 ## Requirements
 - [Visual Studio 2022](https://visualstudio.com) (not strictly required, however included setup scripts only support this)
